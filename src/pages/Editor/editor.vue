@@ -2,14 +2,17 @@
     <div class="editor">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
             <el-form-item label="商品名称" prop="name">
-                <el-input v-model="ruleForm.name"></el-input>
+              <el-input v-model="ruleForm.name"></el-input>
             </el-form-item>
-            <el-form-item label="商品分类" prop="region">
+            <el-form-item label="商品分类" prop="region" style=" display:inline-block">
                 <el-select v-model="ruleForm.region" placeholder="请选择分类">
                 <el-option label="衣服" value="yf"></el-option>
                 <el-option label="鞋子" value="xz"></el-option>
                 </el-select>
             </el-form-item>
+            <el-form-item label="商品编号" prop="" style="width:250px; display:inline-block">
+    					<el-input type="money" v-model.number="ruleForm.code" ></el-input>
+  					</el-form-item>
 						<el-form-item label="优惠价格" prop="sale" style="width:250px; display:inline-block">
     					<el-input type="money" v-model.number="ruleForm.sale" ></el-input>
   					</el-form-item>
@@ -52,19 +55,24 @@
                   <el-button size="small" type="primary">点击上传视频</el-button>
                   <div slot="tip" class="el-upload__tip">只能上传1个视频文件</div>
                 </el-upload>
-            </el-form-item>
-            <el-form-item label="内容" prop="desc">
+            </el-form-item>            
+            <el-form-item label="商品简介" prop="desc">
                 <el-input type="textarea" v-model="ruleForm.desc"></el-input>
             </el-form-item>
-            <el-form-item>
+            <div class="text">
+              <richtext/>
+            </div>
+            <el-form-item style="position:absolute;bottom:0">
                 <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
                 <el-button @click="resetForm('ruleForm')">重置</el-button>
             </el-form-item>
+            
         </el-form>
     </div>
 </template>
 <script>
 import NavMenu from "../../components/NavMenu";
+import richtext from "../../components/richtext";
 export default {
   data() {
     return {
@@ -74,14 +82,16 @@ export default {
         region: "",
         date1: "",
         delivery: false,
-        property: [{
-          value: ''
-        }],
+        property: [
+          {
+            value: ""
+          }
+        ],
         type: [],
         resource: "",
-				desc: "",
-				less: "",
-				money: "",
+        desc: "",
+        less: "",
+        money: "",
         sale: "",
         addr_file: ""
       },
@@ -89,19 +99,19 @@ export default {
         name: [
           { required: true, message: "请输入活动名称", trigger: "blur" },
           { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
-				],
-				money: [
-					{ required: true, message: '原价不能为空'},
-      		{ type: 'number', message: '原价必须为数字值'}
-				],
-				less: [
-					{ required: true, message: '库存不能为空'},
-      		{ type: 'number', message: '库存必须为数字值'}
-				],
-				money: [
-					{ required: true, message: '原价不能为空'},
-      		{ type: 'number', message: '原价必须为数字值'}
-				],
+        ],
+        money: [
+          { required: true, message: "原价不能为空" },
+          { type: "number", message: "原价必须为数字值" }
+        ],
+        less: [
+          { required: true, message: "库存不能为空" },
+          { type: "number", message: "库存必须为数字值" }
+        ],
+        money: [
+          { required: true, message: "原价不能为空" },
+          { type: "number", message: "原价必须为数字值" }
+        ],
         region: [
           { required: true, message: "请选择活动区域", trigger: "change" }
         ],
@@ -135,11 +145,13 @@ export default {
         desc: [{ required: true, message: "请填写内容", trigger: "blur" }]
       },
       dynamicValidateForm: {
-          domains: [{
-            value: ''
-          }],
-          email: ''
-        }
+        domains: [
+          {
+            value: ""
+          }
+        ],
+        email: ""
+      }
     };
   },
   methods: {
@@ -148,7 +160,7 @@ export default {
         if (valid) {
           alert("submit!");
           // 填写信息
-          console.log(this.ruleForm)
+          console.log(this.ruleForm);
         } else {
           console.log("error submit!!");
           return false;
@@ -159,31 +171,41 @@ export default {
       this.$refs[formName].resetFields();
     },
     handleRemove(file, fileList) {
-      console.log("a")
-        console.log(file, fileList);
+      console.log("a");
+      console.log(file, fileList);
     },
     handlePreview(file) {
       console.log(file);
     },
     handleExceed(files, fileList) {
-      this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+      this.$message.warning(
+        `当前限制选择 1 个文件，本次选择了 ${
+          files.length
+        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
+      );
     },
     beforeRemove(file, fileList) {
-      return this.$confirm(`确定移除 ${ file.name }？`);
+      return this.$confirm(`确定移除 ${file.name}？`);
     },
     removeDomain(item) {
       // var index = this.ruleForm.property.indexOf(item)
       // if (index !== -1) {
-        this.ruleForm.property.splice(item-1, 1)
+      this.ruleForm.property.splice(item - 1, 1);
       // }
-    },
+    }
   },
   components: {
-    NavMenu
+    NavMenu,
+    richtext
   }
 };
 </script>
 <style scoped>
+form{
+  width: 100%;
+  height: 1100px;
+  position: relative;
+}
 .editor {
   float: left;
   width: 800px;
@@ -191,7 +213,7 @@ export default {
   margin: 20px;
   padding: 15px;
 }
-.el-col{
+.el-col {
   margin-left: 5px;
 }
 </style>

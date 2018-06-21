@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <NavMenu />
-        <div class="panel">
+        <!-- <div class="panel">
           <el-collapse v-model="activeNames" @change="handleChange">
             <el-collapse-item title="系统信息" name="1">
               <div>基本信息</div>
@@ -16,7 +16,7 @@
               <div>清晰明确</div>
             </el-collapse-item>
           </el-collapse>
-        </div>
+        </div> -->
         <div class="content">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
@@ -77,7 +77,8 @@ export default {
 </script>
 <style scoped>
   .content{
-    margin:20px 0 30px 200px;
+    /* margin:20px 0 30px 200px; */
+    float: left;
   }
   .text {
     font-size: 14px;

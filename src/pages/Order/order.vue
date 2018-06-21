@@ -1,17 +1,20 @@
 <template>
     <div class="order">
         <NavMenu />
-        我是订单页面
+        <richtext />
     </div>
 </template>
 <script>
 import NavMenu from "../../components/NavMenu";
+import richtext from "../../components/richtext";
+
 export default {
   data() {
     return {};
   },
   components: {
-    NavMenu
+    NavMenu,
+    richtext
   }
 };
 </script>

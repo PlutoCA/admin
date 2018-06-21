@@ -5,9 +5,14 @@ import App from './App'
 import router from './router'
 import store from './store'
 import './style/index.css'
-import './kindeditor/kindeditor-all.js'
-import './kindeditor/plugins/code/prettify.js'
-import './kindeditor/lang/zh-CN.js'
+import {quillEditor, Quill} from 'vue-quill-editor'
+import {container, ImageExtend, QuillWatch} from 'quill-image-extend-module'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
+
+Quill.register('modules/ImageExtend', ImageExtend)
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
@@ -22,6 +27,8 @@ new Vue({
   el: '#app',
   router,
   store,
-  components: { App },
+  components: {
+    App
+  },
   template: '<App/>'
 })

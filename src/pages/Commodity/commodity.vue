@@ -142,10 +142,10 @@ export default {
 .panel{
   float: left;
 }
-  .item_table{
-    width: 1000px;
-    float: left;
-    margin:20px 0 30px 30px;
-  }
+.item_table{
+  width: 1000px;
+  float: left;
+  margin:20px 0 30px 30px;
+}
 </style>
 
